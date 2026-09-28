@@ -1,0 +1,40 @@
+name: bump
+
+# Moves Formula/sushi.rb to the newest stable sushi release; a run with nothing newer changes nothing.
+on:
+  schedule:
+    - cron: "23 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: bump
+  cancel-in-progress: false
+
+jobs:
+  bump:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Test the rewrite
+        run: python3 scripts/test_bump.py
+
+      - name: Bump to the newest release
+        id: bump
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: python3 scripts/bump.py Formula/sushi.rb
+
+      - name: Commit and push
+        if: steps.bump.outputs.changed == 'true'
+        env:
+          VERSION: ${{ steps.bump.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -am "sushi $VERSION"
+          git push
