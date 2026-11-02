@@ -20,9 +20,12 @@ class Sushi < Formula
   def install
     libexec.install Dir["*"]
     bin.install_symlink libexec/"sushi"
+    # The menu bar app ships in the tarball from 1.5.0 on.
+    bin.install_symlink libexec/"sushibar" if (libexec/"sushibar").exist?
   end
 
   test do
     assert_match "sushi #{version}", shell_output("#{bin}/sushi --version")
+    assert_match "--port", shell_output("#{bin}/sushibar --help") if (bin/"sushibar").exist?
   end
 end
