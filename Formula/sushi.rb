@@ -1,8 +1,8 @@
 class Sushi < Formula
   desc "LLM inference server for Apple Silicon with OpenAI and Anthropic APIs"
   homepage "https://github.com/beamivalice/sushi"
-  url "https://github.com/beamivalice/sushi/releases/download/v1.7.1/sushi-bin-macos-arm64.tar.gz"
-  sha256 "418c6dd5ac51b6c886c0f226f223d69082dc923c0a0a112f88f1901fae8dada5"
+  url "https://github.com/beamivalice/sushi/releases/download/v1.7.2/sushi-bin-macos-arm64.tar.gz"
+  sha256 "174a9a8f0b78b09fe41bd267ae8fa2cd13087d83bf8c3614ca01930601086694"
   license all_of: ["MIT", "Apache-2.0", "BSD-3-Clause"]
 
   livecheck do
